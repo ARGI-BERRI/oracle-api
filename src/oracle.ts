@@ -1,33 +1,28 @@
-const labels = ['大吉', '中吉', '吉', '小吉', '末吉', '凶', '大凶'] as const;
-
-type Fate = { [key in (typeof labels)[number]]: number };
-
-export const fate: Fate = {
-	大吉: 1,
-	中吉: 2,
-	吉: 3,
-	小吉: 4,
-	末吉: 3,
-	凶: 2,
-	大凶: 1,
-};
-
-type FateKeys = keyof typeof fate;
-
+/**
+ * 神託機械を表現するクラス
+ */
 export class OracleMachine {
 	/**
 	 * 出目の集合
 	 */
 	fates: string[] = [];
 
-	constructor(fate: Fate) {
+	/**
+	 * コンストラクタ
+	 * @param fate インデックスが出目、その値が出目の重みである配列
+	 */
+	constructor(fate: { [key: string]: number }) {
 		Object.keys(fate).map((f) => {
-			const weight = fate[f as FateKeys];
+			const weight = fate[f];
 			[...Array(weight)].map(() => this.fates.push(f));
 		});
 	}
 
-	draw() {
+	/**
+	 * 神託機械から神託を受信する
+	 * @returns コンストラクタに与えた出目のうちいずれか一つ
+	 */
+	receive(): (typeof this.fates)[number] {
 		return this.fates[Math.floor(Math.random() * this.fates.length)];
 	}
 }
