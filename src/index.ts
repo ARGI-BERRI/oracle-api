@@ -1,4 +1,4 @@
-import { fate } from "./constants";
+import { fate, funnyFate } from "./constants";
 import { Env } from "./env";
 import { OracleMachine } from "./oracle";
 
@@ -10,7 +10,7 @@ export default {
       funny: searchParams.get("funny") == "true" ? true : false,
     };
 
-    const oracle = new OracleMachine(fate);
+    const oracle = new OracleMachine(options.funny ? { ...fate, ...funnyFate } : fate);
     const payload = {
       id: crypto.randomUUID(),
       fate: oracle.receive(),
