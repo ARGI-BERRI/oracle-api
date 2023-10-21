@@ -10,7 +10,7 @@ export default {
       funny: searchParams.get("funny") === "true",
     };
 
-    const oracle = new OracleMachine(options.funny ? { ...fate, ...funnyFate } : fate);
+    const oracle = new OracleMachine(options.funny ? [...fate, ...funnyFate] : fate);
     const payload = {
       id: crypto.randomUUID(),
       fate: oracle.receive(),
