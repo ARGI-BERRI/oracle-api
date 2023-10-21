@@ -7,7 +7,7 @@ export default {
     const searchParams = new URL(request.url).searchParams;
     // NOTE: Zod でバリデーションしたほうがいいけど、面倒なので端折ります
     const options = {
-      funny: searchParams.get("funny") == "true" ? true : false,
+      funny: searchParams.get("funny") === "true",
     };
 
     const oracle = new OracleMachine(options.funny ? { ...fate, ...funnyFate } : fate);
